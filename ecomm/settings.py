@@ -279,12 +279,15 @@ SOCIALACCOUNT_LOGIN_ON_GET = True
 
 DEFAULT_DOMAIN = '127.0.0.1:8000'
 DEFAULT_HTTP_PROTOCOL = 'http'
-SITE_ID = 1
+# SITE_ID = 1
 
 
-DEBUG = False
+# DEBUG = False
 ALLOWED_HOSTS = ["*"]
 
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'ecommerce-app.onrender.com', 'avig.pythonanywhere.com']
 
+print("____________")
 
+print(MEDIA_ROOT)
+print(MEDIA_URL)
