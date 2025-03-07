@@ -33,7 +33,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG")
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'growsmart.onrender.com']
+
 
 # import os
 
@@ -283,5 +283,5 @@ SITE_ID = 1
 
 
 DEBUG = False
-ALLOWED_HOSTS = ['avighanshani.pythonanywhere.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'growsmart.onrender.com']
 
