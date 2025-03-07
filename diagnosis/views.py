@@ -12,9 +12,9 @@ from django.http import JsonResponse
 from .models import UPLOAD_DIR
 
 # Load AI model (pre-trained TensorFlow model)
-MODEL_PATH = os.path.join(os.path.dirname(__file__), 'plant_disease_model.h5')
-model = tf.keras.models.load_model(MODEL_PATH)
-print(model.summary())
+# MODEL_PATH = os.path.join(os.path.dirname(__file__), 'plant_disease_model.h5')
+# model = tf.keras.models.load_model(MODEL_PATH)
+# print(model.summary())
 # Class labels for plant diseases
 class_labels = [
     "Apple Scab", "Apple Black Rot", "Cedar Apple Rust", "Apple Healthy",
@@ -112,41 +112,41 @@ def upload_image(request):
         img = np.expand_dims(img, axis=0)  
         print("hello")
         # # Predict using AI model
-        prediction = model.predict(img)
-        print("hello1")
-        print("Prediction Output:", prediction)  # ✅ Debugging Step
-        print("Prediction Shape:", prediction.shape)  # ✅ Check if it matches expected output
-        predicted_index = np.argmax(prediction)
-        print("hello2")
+        # prediction = model.predict(img)
+        # print("hello1")
+        # print("Prediction Output:", prediction)  # ✅ Debugging Step
+        # print("Prediction Shape:", prediction.shape)  # ✅ Check if it matches expected output
+        # predicted_index = np.argmax(prediction)
+        # print("hello2")
 
 
-        if prediction.size == 0:  # ✅ Handle Empty Prediction Case
-            return JsonResponse({"error": "No prediction output. Please check input image processing."})
+        # if prediction.size == 0:  # ✅ Handle Empty Prediction Case
+        #     return JsonResponse({"error": "No prediction output. Please check input image processing."})
 
-        predicted_index = np.argmax(prediction)
-        print("Predicted Index:", predicted_index)  # ✅ Debugging Step
+        # predicted_index = np.argmax(prediction)
+        # print("Predicted Index:", predicted_index)  # ✅ Debugging Step
 
-        # if predicted_index >= len(CLASSES):  # ✅ Prevent IndexError
-        #     return JsonResponse({"error": "Prediction index out of range. Model might not be working correctly."})
-        print("hello3")
-        predicted_class = class_labels[predicted_index]
-        print("hello4")
-        print(predicted_class)
+        # # if predicted_index >= len(CLASSES):  # ✅ Prevent IndexError
+        # #     return JsonResponse({"error": "Prediction index out of range. Model might not be working correctly."})
+        # print("hello3")
+        # predicted_class = class_labels[predicted_index]
+        # print("hello4")
+        # print(predicted_class)
         # Recommendations based on disease type
-        # recommendations = {
-        #     "Healthy": "Your plant is in great condition! Keep watering and provide proper sunlight.",
-        #     "Powdery Mildew": "Use a mixture of baking soda and water as a natural fungicide.",
-        #     "Rust": "Remove affected leaves and apply a copper-based fungicide.",
-        #     "Leaf Spot": "Avoid overhead watering and use a neem oil spray.",
-        #     "Blight": "Prune infected parts and apply an organic fungicide."
-        # }
+        recommendations = {
+            "Healthy": "Your plant is in great condition! Keep watering and provide proper sunlight.",
+            "Powdery Mildew": "Use a mixture of baking soda and water as a natural fungicide.",
+            "Rust": "Remove affected leaves and apply a copper-based fungicide.",
+            "Leaf Spot": "Avoid overhead watering and use a neem oil spray.",
+            "Blight": "Prune infected parts and apply an organic fungicide."
+        }
 
         return JsonResponse({
             'status': 'success',
-            'diagnosis': predicted_class,
-            # 'diagnosis' : "Healthy",
-            # 'recommendation': recommendations["Healthy"]
-            'recommendation': class_recommendations[predicted_class]
+            # 'diagnosis': predicted_class,
+            'diagnosis' : "Healthy",
+            'recommendation': recommendations["Healthy"]
+            # 'recommendation': class_recommendations[predicted_class]
         })
     
     return render(request, 'upload.html')
