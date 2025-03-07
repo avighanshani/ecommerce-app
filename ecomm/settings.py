@@ -283,5 +283,6 @@ SITE_ID = 1
 
 
 DEBUG = False
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'growsmart.onrender.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'ecommerce-app.onrender.com', 'avig.pythonanywhere.com']
+
 

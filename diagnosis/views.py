@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 import os
 import cv2
 import numpy as np
-import tensorflow as tf
+# import tensorflow as tf
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from django.http import JsonResponse
