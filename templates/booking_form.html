@@ -1,0 +1,116 @@
+{% extends "base/base.html" %} {% load static%} 
+{% block title %}About Us{% endblock %} {% block start %}
+
+<head>
+    <title>Book a Virtual Consultation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        button {
+            background: #2d572c;
+            color: white;
+            font-size: 16px;
+            padding: 12px;
+            border: 2px solid #2d572c;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out, color 0.3s;
+        }
+
+        button:hover {
+            background: white;
+            color: #2d572c;
+        }
+        #unique{
+            margin-bottom: 280px;
+        }
+        /* Responsive Design */
+        @media (max-width: 500px) {
+            .container {
+                width: 90%;
+            }
+        }
+        .issue-container {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Space between icon, label, and textarea */
+        }
+
+        .issue-label {
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px; /* Space between icon and text */
+        }
+
+        .issue-label img {
+            width: 18px; /* Adjust icon size if necessary */
+            height: auto;
+        }
+
+        .issue-textarea {
+            width: 300px; /* Adjust width as per design */
+            min-height: 60px; /* Adjust height */
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+            resize: vertical;
+        }
+
+    </style>
+    <!-- <link rel="stylesheet" href="/css/style.css"> -->
+</head>
+
+<body>
+    
+    <script>document.title = "Consultation"; </script>
+    <div id = "unique" class="container">
+        {% if messages %}
+            <div>
+                {% for message in messages %}
+                    <p style="color: green;">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <br>
+        <h1>Book a Virtual Consultation</h1>
+        <br><br>
+        <form method="POST">
+            {% csrf_token %}
+        
+            <label for="name"><i class="fa-solid fa-user"></i> Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            <br><br>
+        
+            <label for="email"><i class="fa-solid fa-envelope"></i> Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            <br><br>
+        
+            <label for="date"><i class="fa-solid fa-calendar"></i> Date:</label>
+            <input type="date" id="date" name="date" required>
+            <br><br>
+        
+            <label for="service_type"><i class="fa-solid fa-seedling"></i> Service Type:</label>
+            <select id="service_type" name="service_type" required>
+                <option value="Virtual Consultation">Virtual Consultation</option>
+                <option value="Gardener Visit">Gardener Visit</option>
+            </select>
+            <br><br>
+        
+
+            
+            <div class="issue-container">
+                <label class="issue-label">
+                    Issue:
+                </label>
+                <textarea class="issue-textarea" placeholder="Describe the issue"></textarea>
+            </div>
+
+            <button type="submit"><i class="fa-solid fa-paper-plane"></i> Book Now</button>
+            <br>
+        </form>
+        
+    </div>
+</body>
+
+{% endblock %}

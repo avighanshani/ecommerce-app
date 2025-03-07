@@ -1,0 +1,112 @@
+{% extends "base/base.html" %} {% load static%} 
+{% block title %}About Us{% endblock %} {% block start %}
+
+<head>
+    <title>AI Plant Diagnosis</title>
+    <style>
+        /* body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background: #f4f4f4;
+        } */
+        .container1 {
+            width: 900px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            margin: auto;
+            margin-top:50px;
+            margin-bottom: 400px;
+        }
+        input {
+            margin: 30px 0;
+            text-align: center;
+        }
+        button {
+            padding: 10px;
+            background: #2d572c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #1f3e1f;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .image-preview {
+            margin-top: 10px;
+            max-width: 100%;
+            max-height: 200px;
+            display: none;
+            border-radius: 8px;
+        }
+        .loading {
+            display: none;
+            margin-top: 15px;
+            font-size: 16px;
+            color: #2d572c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container1">
+        <h1>Upload a Plant Image</h1>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" id="imageInput" name="image" accept="image/*" required>
+            <img id="previewImage" class="image-preview" alt="Image Preview">
+            <p class="loading" id="loadingText">Analyzing... Please wait.</p>
+            <button type="submit">Analyze</button>
+        </form>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        document.title = "Diagnosis"; 
+        document.getElementById("imageInput").addEventListener("change", function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById("previewImage").src = e.target.result;
+                    document.getElementById("previewImage").style.display = "block";
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById("uploadForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const formData = new FormData();
+            formData.append("image", document.getElementById("imageInput").files[0]);
+
+            document.getElementById("loadingText").style.display = "block";
+            document.getElementById("result").innerHTML = "";
+
+            fetch("/diagnosis/upload/", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("loadingText").style.display = "none";
+                document.getElementById("result").innerHTML = 
+                    `<p><strong>Diagnosis:</strong> ${data.diagnosis}</p>
+                    <p><strong>Recommendation:</strong> ${data.recommendation}</p>`;
+            })
+            .catch(error => {
+                document.getElementById("loadingText").style.display = "none";
+                document.getElementById("result").innerHTML = 
+                    `<p style="color: red;">⚠️ Error analyzing image. Please try again.</p>`;
+                console.error("Error:", error);
+            });
+        });
+    </script>
+</body>
+
+{% endblock %}
