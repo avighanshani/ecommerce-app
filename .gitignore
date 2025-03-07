@@ -48,3 +48,8 @@ Thumbs.db
 *.mov
 *.wmv
 
+# Ignore the model file
+diagnosis/plant_disease_model.h5
+
+# Ignore the virtual environment directory
+venv/
